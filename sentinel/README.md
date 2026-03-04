@@ -87,7 +87,7 @@ No single signal is decisive. All four must align before an entry is considered.
 
 ## Infrastructure
 
-**VPS:** Hetzner CCX23 (4 dedicated vCPU, 16 GB RAM, Ashburn VA)
+**VPS:** Hetzner CCX23 (4 dedicated vCPU, 16 GB RAM)
 
 **Docker stack:**
 - `openclaw-gateway` — bot runtime

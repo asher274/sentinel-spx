@@ -267,7 +267,7 @@ JSON: {date, day_type, daily_pnl, win_rate, report_text, ...}
 |----------|-------|
 | Provider | Hetzner Cloud |
 | Instance | CCX23 (4 dedicated vCPU, 16 GB RAM) |
-| Region | Ashburn, VA (us-east proximity to CBOE/Polygon servers) |
+| Region | US East (proximity to CBOE/Polygon servers — e.g. Ashburn VA, NYC) |
 | OS | Ubuntu 22.04 LTS |
 | Storage | 160 GB NVMe SSD |
 

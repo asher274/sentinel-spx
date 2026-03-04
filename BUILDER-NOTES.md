@@ -53,7 +53,7 @@ Every session, Sentinel must:
 8. Brief the operator if anything notable. Otherwise greet and stand ready.
 
 ## Infrastructure Note
-- Same Hetzner VPS as existing OpenClaw instance
+- Linux VPS (isolated Docker network)
 - Isolated Docker network: `sentinel-net`
 - All containers prefixed `sentinel-`
 - docker-compose.yml uses `name: sentinel`

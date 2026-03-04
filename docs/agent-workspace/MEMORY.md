@@ -14,7 +14,7 @@ _Load in main session only. Curated state, trends, lessons. Update with /save._
 
 ## Infrastructure
 
-- **VPS:** Hetzner (shared with main OpenClaw instance, isolated Docker network)
+- **VPS:** Linux VPS (isolated Docker network)
 - **Docker network:** sentinel-net
 - **Ports:** postgres 5433 | redis 6380 | grafana 3001 | prometheus 9091
 - **Backup:** nightly-backup cron, 2:00 AM ET daily
