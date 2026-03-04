@@ -1,0 +1,77 @@
+name: sentinel
+
+networks:
+  sentinel-net:
+    external: true
+
+services:
+  sentinel-postgres:
+    image: postgres:16
+    container_name: sentinel-postgres
+    environment:
+      POSTGRES_DB: sentinel
+      POSTGRES_USER: sentinel
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - sentinel-postgres-data:/var/lib/postgresql/data
+    networks:
+      - sentinel-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sentinel"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  sentinel-redis:
+    image: redis:7-alpine
+    container_name: sentinel-redis
+    command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes
+    ports:
+      - "127.0.0.1:6380:6379"
+    volumes:
+      - sentinel-redis-data:/data
+    networks:
+      - sentinel-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "--no-auth-warning", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  sentinel-grafana:
+    image: grafana/grafana-oss:latest
+    container_name: sentinel-grafana
+    ports:
+      - "0.0.0.0:3001:3000"
+    volumes:
+      - sentinel-grafana-data:/var/lib/grafana
+    networks:
+      - sentinel-net
+    restart: unless-stopped
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
+
+  sentinel-prometheus:
+    image: prom/prometheus:latest
+    container_name: sentinel-prometheus
+    ports:
+      - "127.0.0.1:9091:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - sentinel-prometheus-data:/prometheus
+    networks:
+      - sentinel-net
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.retention.time=30d'
+
+volumes:
+  sentinel-postgres-data:
+  sentinel-redis-data:
+  sentinel-grafana-data:
+  sentinel-prometheus-data:

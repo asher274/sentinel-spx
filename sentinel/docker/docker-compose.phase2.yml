@@ -1,0 +1,27 @@
+name: sentinel
+
+services:
+  sentinel-ibgateway:
+    image: ghcr.io/gnzsnz/ib-gateway:latest
+    container_name: sentinel-ibgateway
+    environment:
+      TWS_USERID: ${IBKR_USERNAME}
+      TWS_PASSWORD: ${IBKR_PASSWORD}
+      TRADING_MODE: ${IBKR_TRADING_MODE:-paper}
+      TWS_PORT: ${IBKR_PORT:-4002}
+      VNC_SERVER_PASSWORD: ${VNC_PASSWORD}
+    ports:
+      - "127.0.0.1:${IBKR_PORT:-4002}:${IBKR_PORT:-4002}"
+      - "127.0.0.1:5901:5900"
+    volumes:
+      - sentinel-ibgateway-data:/home/ibgateway/Jts
+    networks:
+      - sentinel-net
+    restart: unless-stopped
+
+volumes:
+  sentinel-ibgateway-data:
+
+networks:
+  sentinel-net:
+    external: true

@@ -1,0 +1,81 @@
+# Environment files — NEVER commit these
+.env
+.env.trading
+.env.live
+.env.paper
+*.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+.venv/
+venv/
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Logs
+*.log
+logs/
+*.log.*
+sentinel.log*
+trading.log*
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Docker volumes (if mounted locally)
+postgres-data/
+redis-data/
+grafana-data/
+prometheus-data/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Memory files (local only, not for version control)
+memory/
+MEMORY.md
+system/context-buffer.md
+
+# Credentials and secrets
+*.pem
+*.key
+*.cert
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Node
+node_modules/
+npm-debug.log*
