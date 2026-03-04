@@ -2,13 +2,13 @@ title: Sentinel
 description: Automated SPX 0DTE Iron Condor Trading System
 theme: just-the-docs
 
-url: https://YOUR_GITHUB_USERNAME.github.io/sentinel-spx
+url: https://asher274.github.io/sentinel-spx
 
 nav_sort: case_sensitive
 
 nav_external_links:
   - title: GitHub Repository
-    url: https://github.com/YOUR_GITHUB_USERNAME/sentinel-spx
+    url: https://github.com/asher274/sentinel-spx
 
 footer_content: "Sentinel — Not financial advice."
 

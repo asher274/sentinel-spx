@@ -1,0 +1,391 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ================================================================
+   SENTINEL — Fulcrum Dark Terminal Theme
+   Design System v2.1 | Accent: Terminal Green #00D97E
+   Cormorant Garamond + DM Mono | Base-8 spacing
+   ================================================================ */
+
+:root {
+  --sentinel-black:      #0A0A09;
+  --sentinel-ink:        #1A1814;
+  --sentinel-ink-mid:    #2A2820;
+  --sentinel-ink-light:  #9A9088;
+  --sentinel-cream:      #F5F1EA;
+  --sentinel-cream-mid:  #EAE5DA;
+  --sentinel-green:      #00D97E;
+  --sentinel-green-dim:  #00A860;
+  --sentinel-green-pale: #00D97E18;
+  --sentinel-rule:       #2A2820;
+  --sentinel-mono:       'DM Mono', 'Courier New', monospace;
+  --sentinel-serif:      'Cormorant Garamond', Georgia, serif;
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background-color: var(--sentinel-black) !important;
+  color: var(--sentinel-cream) !important;
+  font-family: var(--sentinel-serif) !important;
+  font-size: 17px !important;
+  font-weight: 400 !important;
+  line-height: 1.75 !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Sidebar ── */
+.side-bar,
+nav.side-bar {
+  background-color: var(--sentinel-ink) !important;
+  border-right: 1px solid var(--sentinel-rule) !important;
+}
+
+.site-header,
+.site-title {
+  background-color: var(--sentinel-ink) !important;
+  border-bottom: 1px solid var(--sentinel-rule) !important;
+  padding: 20px 24px !important;
+}
+
+.site-title {
+  font-family: var(--sentinel-mono) !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  color: var(--sentinel-cream) !important;
+  text-decoration: none !important;
+  opacity: 0.85;
+}
+
+.site-title::after {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--sentinel-green);
+  margin-top: 8px;
+}
+
+/* ── Nav Items ── */
+.nav-list {
+  padding: 16px 0 !important;
+}
+
+.nav-list .nav-list-item .nav-list-link {
+  font-family: var(--sentinel-mono) !important;
+  font-size: 9.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: rgba(245, 241, 234, 0.45) !important;
+  padding: 8px 24px !important;
+  background: none !important;
+  border: none !important;
+  transition: color 0.15s ease !important;
+}
+
+.nav-list .nav-list-item .nav-list-link:hover {
+  color: var(--sentinel-cream) !important;
+  background: none !important;
+}
+
+.nav-list .nav-list-item .nav-list-link.active {
+  color: var(--sentinel-green) !important;
+  background: var(--sentinel-green-pale) !important;
+  border-left: 1.5px solid var(--sentinel-green) !important;
+}
+
+/* ── Main Content Area ── */
+.main-content-wrap,
+.main {
+  background-color: var(--sentinel-black) !important;
+}
+
+.main-content {
+  background-color: var(--sentinel-black) !important;
+  max-width: 760px !important;
+  padding: 48px 64px !important;
+  color: var(--sentinel-cream) !important;
+}
+
+/* ── Headings ── */
+.main-content h1 {
+  font-family: var(--sentinel-serif) !important;
+  font-size: 48px !important;
+  font-weight: 500 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.01em !important;
+  color: var(--sentinel-cream) !important;
+  border-bottom: 1.5px solid var(--sentinel-rule) !important;
+  padding-bottom: 20px !important;
+  margin-bottom: 32px !important;
+  margin-top: 0 !important;
+}
+
+.main-content h2 {
+  font-family: var(--sentinel-serif) !important;
+  font-size: 34px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  color: var(--sentinel-cream) !important;
+  border-bottom: 1px solid var(--sentinel-rule) !important;
+  padding-bottom: 12px !important;
+  margin-top: 56px !important;
+  margin-bottom: 24px !important;
+}
+
+.main-content h3 {
+  font-family: var(--sentinel-serif) !important;
+  font-size: 22px !important;
+  font-weight: 500 !important;
+  font-style: italic !important;
+  color: var(--sentinel-cream) !important;
+  margin-top: 40px !important;
+  margin-bottom: 16px !important;
+}
+
+.main-content h4,
+.main-content h5,
+.main-content h6 {
+  font-family: var(--sentinel-mono) !important;
+  font-size: 9px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: var(--sentinel-green) !important;
+  margin-top: 32px !important;
+  margin-bottom: 12px !important;
+}
+
+/* ── Body text ── */
+.main-content p {
+  font-family: var(--sentinel-serif) !important;
+  font-size: 16px !important;
+  line-height: 1.75 !important;
+  color: rgba(245, 241, 234, 0.78) !important;
+  max-width: 640px;
+}
+
+/* ── Links ── */
+.main-content a,
+a {
+  color: var(--sentinel-green) !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid rgba(0, 217, 126, 0.3) !important;
+  transition: border-color 0.15s ease, color 0.15s ease !important;
+}
+
+.main-content a:hover,
+a:hover {
+  color: #4ADE80 !important;
+  border-bottom-color: rgba(74, 222, 128, 0.6) !important;
+}
+
+/* Nav links override (no underline treatment) */
+.nav-list-link,
+.site-title {
+  border-bottom: none !important;
+}
+
+/* ── Code & Pre ── */
+code,
+.main-content code {
+  font-family: var(--sentinel-mono) !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.04em !important;
+  background-color: var(--sentinel-ink) !important;
+  color: var(--sentinel-green) !important;
+  padding: 2px 6px !important;
+  border-radius: 0 !important;
+  border: 1px solid var(--sentinel-rule) !important;
+}
+
+pre,
+.main-content pre {
+  background-color: var(--sentinel-ink) !important;
+  border: 1px solid var(--sentinel-rule) !important;
+  border-left: 2px solid var(--sentinel-green) !important;
+  border-radius: 0 !important;
+  padding: 24px !important;
+  overflow-x: auto !important;
+  margin: 24px 0 !important;
+}
+
+pre code {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  color: var(--sentinel-cream-mid) !important;
+  font-size: 12px !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* ── Tables ── */
+.main-content table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 24px 0 !important;
+  font-family: var(--sentinel-serif) !important;
+  font-size: 15px !important;
+}
+
+.main-content table th {
+  font-family: var(--sentinel-mono) !important;
+  font-size: 9px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  color: var(--sentinel-green) !important;
+  border-bottom: 1.5px solid var(--sentinel-green) !important;
+  padding: 8px 12px !important;
+  background: none !important;
+  text-align: left !important;
+}
+
+.main-content table td {
+  padding: 10px 12px !important;
+  border-bottom: 1px solid var(--sentinel-rule) !important;
+  color: rgba(245, 241, 234, 0.78) !important;
+  vertical-align: top !important;
+}
+
+.main-content table tr:hover td {
+  background: var(--sentinel-green-pale) !important;
+}
+
+/* ── Lists ── */
+.main-content ul,
+.main-content ol {
+  font-family: var(--sentinel-serif) !important;
+  font-size: 16px !important;
+  line-height: 1.75 !important;
+  color: rgba(245, 241, 234, 0.78) !important;
+  padding-left: 20px !important;
+}
+
+.main-content ul li::marker {
+  color: var(--sentinel-green) !important;
+}
+
+.main-content ol li::marker {
+  font-family: var(--sentinel-mono) !important;
+  font-size: 11px !important;
+  color: var(--sentinel-green) !important;
+}
+
+/* ── Blockquote (pull quote) ── */
+.main-content blockquote {
+  border-left: 2px solid var(--sentinel-green) !important;
+  background: var(--sentinel-green-pale) !important;
+  padding: 16px 24px !important;
+  margin: 24px 0 !important;
+  font-family: var(--sentinel-serif) !important;
+  font-style: italic !important;
+  font-size: 18px !important;
+  color: var(--sentinel-cream) !important;
+}
+
+.main-content blockquote p {
+  color: var(--sentinel-cream) !important;
+  font-size: 18px !important;
+  margin: 0 !important;
+}
+
+/* ── Search ── */
+.search {
+  background-color: var(--sentinel-ink) !important;
+  border-bottom: 1px solid var(--sentinel-rule) !important;
+}
+
+.search-input {
+  font-family: var(--sentinel-mono) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.08em !important;
+  background-color: var(--sentinel-ink) !important;
+  color: var(--sentinel-cream) !important;
+  border: 1px solid var(--sentinel-rule) !important;
+  border-radius: 0 !important;
+}
+
+.search-input::placeholder {
+  color: var(--sentinel-ink-light) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 9px;
+}
+
+.search-results-wrap,
+.search-result {
+  background-color: var(--sentinel-ink) !important;
+  border: 1px solid var(--sentinel-rule) !important;
+}
+
+/* ── Breadcrumbs ── */
+.breadcrumb-nav,
+.breadcrumb-nav-list-item {
+  font-family: var(--sentinel-mono) !important;
+  font-size: 9px !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  color: var(--sentinel-ink-light) !important;
+}
+
+/* ── Page nav (prev/next) ── */
+.page-navigation {
+  border-top: 1px solid var(--sentinel-rule) !important;
+  margin-top: 64px !important;
+  padding-top: 32px !important;
+}
+
+.page-navigation a {
+  font-family: var(--sentinel-mono) !important;
+  font-size: 9px !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+}
+
+/* ── Footer ── */
+.site-footer {
+  background-color: var(--sentinel-ink) !important;
+  border-top: 1px solid var(--sentinel-rule) !important;
+  font-family: var(--sentinel-mono) !important;
+  font-size: 9px !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  color: var(--sentinel-ink-light) !important;
+}
+
+/* ── Horizontal Rule ── */
+.main-content hr {
+  border: none !important;
+  border-top: 1px solid var(--sentinel-rule) !important;
+  margin: 40px 0 !important;
+}
+
+/* ── Selection ── */
+::selection {
+  background: rgba(0, 217, 126, 0.2) !important;
+  color: var(--sentinel-cream) !important;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--sentinel-black); }
+::-webkit-scrollbar-thumb { background: var(--sentinel-rule); }
+::-webkit-scrollbar-thumb:hover { background: var(--sentinel-green-dim); }
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .main-content {
+    padding: 32px 20px !important;
+  }
+  .main-content h1 { font-size: 36px !important; }
+  .main-content h2 { font-size: 26px !important; }
+}
+</style>
