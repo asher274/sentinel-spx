@@ -2,7 +2,7 @@
 
 > **⚠️ NOT YET ACTIVE ⚠️**  
 > **Phase:** 2 of 3  
-> **Prerequisites:** Phase 0 AND Phase 1 fully complete + Asher explicit approval  
+> **Prerequisites:** Phase 0 AND Phase 1 fully complete + the operator explicit approval  
 > **Status:** DESIGN REFERENCE ONLY — DO NOT IMPLEMENT WITHOUT EXPLICIT APPROVAL
 
 ---
@@ -15,7 +15,7 @@ No automated order placement is implemented or should be implemented until:
 
 1. Phase 0 exit criteria are fully met (see `docs/phase-0-paper.md`)
 2. Phase 1 exit criteria are fully met (see `docs/phase-1-alerts.md`)
-3. Asher explicitly types approval in Discord
+3. the operator explicitly types approval in Discord
 4. `SENTINEL_PHASE=2` is manually set in `.env.trading`
 5. All Phase 2 infrastructure is tested in IBKR paper mode
 6. A final pre-launch checklist (documented below) is completed
@@ -161,7 +161,7 @@ Phase 2 uses a graduated size ramp:
 | Scale-up 1 | Half size (2 contracts) | After 10 profitable Phase 2 trades |
 | Scale-up 2 | Full size (4 contracts) | After 20 profitable Phase 2 trades |
 
-Size is stored in Redis key `sentinel:position_size` and updated manually by Asher after each scale-up milestone.
+Size is stored in Redis key `sentinel:position_size` and updated manually by the operator after each scale-up milestone.
 
 ---
 
@@ -173,7 +173,7 @@ Size is stored in Redis key `sentinel:position_size` and updated manually by Ash
 2. For each open iron condor leg: submits a market order to close
 3. Waits up to 30 seconds for each fill
 4. Posts confirmation of each close to Discord #alerts
-5. If any close fails after 3 retries: pages Asher via Telegram
+5. If any close fails after 3 retries: pages the operator via Telegram
 6. Exits 0 only when all positions are confirmed closed
 
 This script is invoked by:
@@ -244,11 +244,11 @@ If the kill switch is activated while a position is open:
 **Step 2:** MKT orders submitted for all open legs  
 **Step 3:** Wait 30s per leg for fill confirmation  
 **Step 4:** If fill not confirmed: retry with MKT order, 3 attempts  
-**Step 5:** If all retries fail: send Telegram alert to Asher immediately  
+**Step 5:** If all retries fail: send Telegram alert to the operator immediately  
 **Step 6:** Log all actions to MEMORY.md  
 **Step 7:** Post full status to Discord #alerts  
 
-**Asher must manually verify all positions are closed in IBKR desktop before resuming.**
+**the operator must manually verify all positions are closed in IBKR desktop before resuming.**
 
 ---
 
@@ -269,7 +269,7 @@ Before activating `SENTINEL_PHASE=2`, complete all of the following:
 - [ ] Grafana dashboard live and showing Phase 2 metrics
 - [ ] Prometheus metrics confirmed scraping
 - [ ] Discord alerts confirmed for all circuit breaker events
-- [ ] Telegram failover confirmed (Asher receives test notification)
+- [ ] Telegram failover confirmed (the operator receives test notification)
 
 ### Risk Controls
 - [ ] Account size defined (`sentinel:account_size` in Redis)
@@ -278,10 +278,10 @@ Before activating `SENTINEL_PHASE=2`, complete all of the following:
 - [ ] Kill switch confirmed at `0` (inactive)
 
 ### Final Approval
-- [ ] Asher reviews complete pre-launch checklist
-- [ ] Asher confirms IBKR account funded and ready
+- [ ] the operator reviews complete pre-launch checklist
+- [ ] the operator confirms IBKR account funded and ready
 - [ ] `IBKR_TRADING_MODE=paper` set for first Phase 2 week (paper mode with real signal timing)
-- [ ] Asher explicitly types approval:  
+- [ ] the operator explicitly types approval:  
   `"Approved: Sentinel Phase 2 launch. Live execution enabled."`
 - [ ] `SENTINEL_PHASE=2` set in `.env.trading`
 - [ ] OpenClaw gateway restarted to pick up new phase
@@ -292,11 +292,11 @@ Before activating `SENTINEL_PHASE=2`, complete all of the following:
 
 | Milestone | Trigger | Action |
 |-----------|---------|--------|
-| Launch | Asher approval + SENTINEL_PHASE=2 | Paper mode execution begins |
-| Live flip | Asher approval after 5 paper Phase 2 trades | Switch IBKR_TRADING_MODE=live |
-| Scale-up 1 | 10 profitable live trades | sentinel:position_size = 2 (Asher sets) |
-| Scale-up 2 | 20 profitable live trades | sentinel:position_size = 4 (Asher sets) |
-| Monthly review | End of each month | Asher reviews drawdown, win rate, circuit breaker history |
+| Launch | the operator approval + SENTINEL_PHASE=2 | Paper mode execution begins |
+| Live flip | the operator approval after 5 paper Phase 2 trades | Switch IBKR_TRADING_MODE=live |
+| Scale-up 1 | 10 profitable live trades | sentinel:position_size = 2 (the operator sets) |
+| Scale-up 2 | 20 profitable live trades | sentinel:position_size = 4 (the operator sets) |
+| Monthly review | End of each month | the operator reviews drawdown, win rate, circuit breaker history |
 
 ---
 

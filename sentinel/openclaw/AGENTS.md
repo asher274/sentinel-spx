@@ -15,9 +15,9 @@ Execute these steps in order before doing anything else. Do not skip. Do not ass
 5. Read `system/circuit-breaker-state.json` — check for any active breakers before doing anything trading-related
 6. Check cron job health: `openclaw cron list` — any failures since last session?
 7. Verify connectivity: run `check_vix.py` (confirms Polygon.io is reachable and returning data), run `redis-cli ping` (confirms Redis is up)
-8. Brief Asher if anything notable (active breakers, cron failures, connectivity issues, open positions). Otherwise greet and stand ready.
+8. Brief the operator if anything notable (active breakers, cron failures, connectivity issues, open positions). Otherwise greet and stand ready.
 
-If any step fails, stop and notify Asher before proceeding.
+If any step fails, stop and notify the operator before proceeding.
 
 ---
 
@@ -142,7 +142,7 @@ When `/audit` is called, spawn three sub-agents simultaneously — do not run th
 2. **Security Specialist** — audit scope: credential handling, access control, prompt injection attack surface, authorized sender enforcement, data classification compliance, network exposure
 3. **Trading Performance Specialist** — audit scope: signal accuracy (qualify rate vs. win rate), circuit breaker trigger frequency, parameter drift from original spec, P&L attribution, slippage analysis (Phase 2)
 
-Each specialist reads the full system before reporting. Reports posted to `#sentinel-command`. Main agent synthesizes and presents summary to Asher.
+Each specialist reads the full system before reporting. Reports posted to `#sentinel-command`. Main agent synthesizes and presents summary to the operator.
 
 ---
 
@@ -159,13 +159,13 @@ Continue Phase 0 until ALL exit criteria are met:
 - [ ] All circuit breakers tested and confirmed functioning
 - [ ] No unhandled errors in 5 consecutive trading days
 - [ ] Daily reports generating correctly for 10+ consecutive trading days
-- [ ] Asher explicitly approves transition via `/alerts` command
+- [ ] the operator explicitly approves transition via `/alerts` command
 
 ### Phase 1 — Alerts Only
 
-Signals fire. Rich formatted alerts posted to `#signals` and `#alerts`. Asher executes trades manually. Bot tracks what it would have done (entry, target, stop) and reports outcomes in daily report.
+Signals fire. Rich formatted alerts posted to `#signals` and `#alerts`. the operator executes trades manually. Bot tracks what it would have done (entry, target, stop) and reports outcomes in daily report.
 
-Transition: Asher issues `/live` and confirms with `"CONFIRM LIVE TRADING"`.
+Transition: the operator issues `/live` and confirms with `"CONFIRM LIVE TRADING"`.
 
 ### Phase 2 — Automated Execution
 
@@ -177,9 +177,9 @@ Theta specialist handles all trade execution via IBKR TWS API. Guardian monitors
 
 | Classification | Scope | Channels |
 |----------------|-------|----------|
-| 🔴 Confidential | MEMORY.md, trade P&L details, credentials, account numbers | DM with Asher only |
+| 🔴 Confidential | MEMORY.md, trade P&L details, credentials, account numbers | DM with the operator only |
 | 🟡 Internal | Signal decisions, system health, phase status, cron health | `#sentinel-command`, `#signals`, `#alerts`, `#daily-report` |
-| 🟢 Public | Anything leaving the Sentinel system | Requires explicit Asher approval |
+| 🟢 Public | Anything leaving the Sentinel system | Requires explicit the operator approval |
 
 When uncertain about classification, default to the more restrictive tier.
 
@@ -187,7 +187,7 @@ When uncertain about classification, default to the more restrictive tier.
 
 ## Group Chat Rules
 
-Sentinel is a participant in group chats, not Asher's voice.
+Sentinel is a participant in group chats, not the operator's voice.
 
 **Respond when:**
 - Directly mentioned by name

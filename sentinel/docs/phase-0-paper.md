@@ -12,7 +12,7 @@ Phase 0 is a fully autonomous paper trading simulation. The system operates exac
 
 Paper trading exists to answer one question: **Is Sentinel's signal logic sound enough to risk real capital?**
 
-It takes at least 30 days and 50 trades to answer that question with confidence. During this time, every GO signal, every filter fail, every forced close, and every P&L result is logged and reviewed. Only when the data clearly supports progression — and Asher explicitly approves — does Sentinel advance to Phase 1.
+It takes at least 30 days and 50 trades to answer that question with confidence. During this time, every GO signal, every filter fail, every forced close, and every P&L result is logged and reviewed. Only when the data clearly supports progression — and the operator explicitly approves — does Sentinel advance to Phase 1.
 
 There are no shortcuts. The only path forward is through Phase 0.
 
@@ -116,7 +116,7 @@ Write the journal entry:
 3. **After exit** — add exit time, credit, P&L, reason
 4. **End of day** — add qualitative notes
 
-The journal is Asher's primary review tool during Phase 0 evaluations. Keep it honest. Note anomalies, errors, close calls, and anything unusual.
+The journal is the operator's primary review tool during Phase 0 evaluations. Keep it honest. Note anomalies, errors, close calls, and anything unusual.
 
 ---
 
@@ -241,7 +241,7 @@ This ensures the system has been tested across varying market conditions — inc
 **The cumulative win rate across all Phase 0 trades must be between 55% and 65%**, evaluated at the 50-trade mark.
 
 - Win rate below 55%: signals are underperforming. Do not advance.
-- Win rate above 65%: investigate whether signals are over-fitted to current conditions. Advance cautiously with Asher review.
+- Win rate above 65%: investigate whether signals are over-fitted to current conditions. Advance cautiously with the operator review.
 - Win rate 55–65%: healthy range that supports positive expectancy with 1:1 reward/risk.
 
 **Check:** `python scripts/daily_report.py | jq '.cumulative_win_rate'`
@@ -274,9 +274,9 @@ This demonstrates the reporting infrastructure is reliable enough for Phase 1.
 
 ---
 
-### Criterion 6: Asher Explicit Approval
+### Criterion 6: the operator Explicit Approval
 
-**Asher must explicitly review the Phase 0 results and give a go/no-go decision** before the system can advance.
+**the operator must explicitly review the Phase 0 results and give a go/no-go decision** before the system can advance.
 
 The review includes:
 1. Reading all 10+ daily reports
@@ -285,7 +285,7 @@ The review includes:
 4. Confirming all 5 criteria above are met
 5. Typing explicit confirmation in Discord: `"Approved: Sentinel Phase 0 complete. Advance to Phase 1."`
 
-**There is no automated advancement.** `SENTINEL_PHASE` in `.env.trading` is only changed by Asher manually.
+**There is no automated advancement.** `SENTINEL_PHASE` in `.env.trading` is only changed by the operator manually.
 
 ---
 
@@ -294,7 +294,7 @@ The review includes:
 | Scenario | Action |
 |----------|--------|
 | Win rate < 55% at 50 trades | Do NOT advance. Review filter logic. Paper trade another 20–30 trades. |
-| Win rate > 65% | Flag for Asher review. May advance but watch for over-fitting. |
+| Win rate > 65% | Flag for the operator review. May advance but watch for over-fitting. |
 | System error streak | Fix the root cause first. Reset the 5-day error clock. |
 | Fewer than 50 trades in 30 days | Continue. Check that the day-of-week filter is working correctly. |
 | Reports not posting | Fix Discord integration. Reports are a hard requirement. |

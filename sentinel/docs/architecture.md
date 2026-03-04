@@ -411,7 +411,7 @@ Docker services use `docker/.env` (copy of `.env.example` with values filled in)
 3. Win rate 55–65% sustained (or above 65% consistently)
 4. Zero system errors for 5 consecutive trading days
 5. Daily reports generated for ≥ 10 trading days
-6. Explicit approval from Asher
+6. Explicit approval from the operator
 
 See `docs/phase-0-paper.md` for full details.
 
@@ -422,7 +422,7 @@ See `docs/phase-0-paper.md` for full details.
 **Status:** FUTURE (not yet active)
 
 - Bot posts signals to Discord #signals channel
-- Human (Asher) executes trades manually
+- Human (the operator) executes trades manually
 - Theoretical P&L tracked in paper_trades.json
 - System measures human execution confirmation rate
 
@@ -430,7 +430,7 @@ See `docs/phase-0-paper.md` for full details.
 1. Phase 0 criteria met and approved
 2. ≥ 20 alert cycles observed and manually executed
 3. Real P&L tracking confirms signal quality
-4. Explicit approval from Asher
+4. Explicit approval from the operator
 
 See `docs/phase-1-alerts.md` for full details.
 
@@ -446,7 +446,7 @@ See `docs/phase-1-alerts.md` for full details.
 - Scales to full size after 20 profitable trades
 - Phase 1 alerts continue as transparency layer
 
-**WARNING:** Phase 2 requires explicit activation with `SENTINEL_PHASE=2` and must never be enabled without Asher's explicit go-ahead.
+**WARNING:** Phase 2 requires explicit activation with `SENTINEL_PHASE=2` and must never be enabled without the operator's explicit go-ahead.
 
 See `docs/phase-2-automated.md` for full details.
 
@@ -554,7 +554,7 @@ redis-cli -h localhost -p 6380 -a $REDIS_PASSWORD SET cb:kill_switch 0
 Before resetting, verify:
 1. Root cause of activation identified
 2. Any open positions closed or accounted for
-3. Asher explicitly approves resumption
+3. the operator explicitly approves resumption
 4. System health check passed
 
 ### 9.4 Force Close Protocol
@@ -565,7 +565,7 @@ When the kill switch is activated with open positions (Phase 2):
 2. It sends MKT orders to close all open SPX iron condors
 3. Retries up to 3 times on failure
 4. Posts confirmation of each close to #alerts
-5. If all closes fail after retries: pages Asher via Telegram
+5. If all closes fail after retries: pages the operator via Telegram
 
 ---
 
@@ -650,7 +650,7 @@ In production, stderr is captured by Docker logging driver and can be shipped to
 - Postgres and Redis are bound to `127.0.0.1` only — never expose to 0.0.0.0
 - Grafana is the only service with a public port — protect with a firewall rule allowing only known IPs, or add nginx basic auth
 - API keys should be rotated if the VPS is ever compromised
-- IBKR live credentials must never be set until explicitly approved by Asher
+- IBKR live credentials must never be set until explicitly approved by the operator
 - The kill switch requires Redis auth — don't share `REDIS_PASSWORD`
 - All SSH access to VPS should use key-based auth only (no passwords)
 

@@ -69,7 +69,7 @@ Not yet verified — check on first boot with `openclaw cron list`.
 
 ---
 
-## Pending from Asher
+## Pending from the operator
 
 - Complete Phase 0 paper trading: 30 calendar days, 50+ trades minimum
 - Verify IBKR paper account credentials loaded correctly in env vars
@@ -90,4 +90,4 @@ System initialized. All files written. No trades have been executed.
 
 Begin Phase 0 on the next qualifying trading day (Mon/Tue/Thu). First action: pre-market scan at 9:00 AM ET. First signal window: 10:10 AM ET.
 
-Do not transition to Phase 1 or Phase 2 until all Phase 0 exit criteria are met and Asher explicitly approves.
+Do not transition to Phase 1 or Phase 2 until all Phase 0 exit criteria are met and the operator explicitly approves.

@@ -2,21 +2,21 @@
 
 > **Status:** NOT YET ACTIVE  
 > **Phase:** 1 of 3  
-> **Prerequisites:** Phase 0 exit criteria met + Asher approval  
+> **Prerequisites:** Phase 0 exit criteria met + the operator approval  
 > **Goal:** Real-money signal validation via human execution, before automation.
 
 ---
 
 ## What Is Phase 1?
 
-Phase 1 is alert-only mode. Sentinel identifies iron condor setups with the same rigor as Phase 0, but instead of logging paper trades internally, it **posts rich trade alerts to Discord `#signals`** for Asher to execute manually.
+Phase 1 is alert-only mode. Sentinel identifies iron condor setups with the same rigor as Phase 0, but instead of logging paper trades internally, it **posts rich trade alerts to Discord `#signals`** for the operator to execute manually.
 
 Phase 1 bridges the gap between simulation and automation. The signal logic is tested against real market fills, real slippage, and real execution friction. The system learns whether its setups are executable — not just theoretically profitable.
 
 During Phase 1:
 - Sentinel posts every GO signal to `#signals` with full setup details
-- Asher decides whether to execute each alert
-- Asher logs actual fills to `paper_trades.json` using `paper_trade.py`
+- the operator decides whether to execute each alert
+- the operator logs actual fills to `paper_trades.json` using `paper_trade.py`
 - The system tracks theoretical P&L (what would have happened at signal time)
 - Theoretical vs. actual P&L delta is measured to quantify execution slippage
 
@@ -24,8 +24,8 @@ During Phase 1:
 
 ## What Phase 1 Is NOT
 
-- It does **not** place orders automatically. Any order is placed by Asher manually in the IBKR desktop or mobile app.
-- It does **not** guarantee that Asher must trade every alert. Asher may skip alerts for any reason.
+- It does **not** place orders automatically. Any order is placed by the operator manually in the IBKR desktop or mobile app.
+- It does **not** guarantee that the operator must trade every alert. the operator may skip alerts for any reason.
 - It does **not** replace Phase 0. Phase 1 only begins after Phase 0 criteria are fully met.
 
 ---
@@ -103,7 +103,7 @@ Sentinel tracks two P&L streams in Phase 1:
 
 The system logs the signal's setup at the time of the GO decision. At market close, it calculates what the P&L would have been if executed at the target credit mid.
 
-This is logged automatically by `paper_trade.py --entry` when called immediately after signal generation (even if Asher doesn't execute). Use `--notes "theoretical_only"` to mark these.
+This is logged automatically by `paper_trade.py --entry` when called immediately after signal generation (even if the operator doesn't execute). Use `--notes "theoretical_only"` to mark these.
 
 ```bash
 # Log theoretical entry immediately after signal
@@ -115,10 +115,10 @@ python scripts/paper_trade.py --exit --id PT-XXXX --exit-credit 0.00 --reason fo
 
 ### 2. Actual P&L (Manual)
 
-When Asher executes an alert:
+When the operator executes an alert:
 
 ```bash
-# Log actual fill (Asher enters the credit received from IBKR)
+# Log actual fill (the operator enters the credit received from IBKR)
 python scripts/paper_trade.py --entry --credit-received 1.78 --notes "actual_fill"
 
 # Log actual exit
@@ -129,26 +129,26 @@ python scripts/paper_trade.py --exit --id PT-XXXX --exit-credit 0.91 --reason pr
 
 The daily report and weekly review should compare:
 - `theoretical_pnl` (what the system expected)
-- `actual_pnl` (what Asher received)
+- `actual_pnl` (what the operator received)
 
 If theoretical P&L is consistently positive but actual P&L is significantly worse, the setup parameters need adjustment (e.g., widen credit targets to account for slippage, adjust stop levels).
 
 ---
 
-## Measuring Asher Execution Confirmation Rate
+## Measuring the operator Execution Confirmation Rate
 
-The **execution confirmation rate** measures how often Asher actually trades an alert vs. receives it.
+The **execution confirmation rate** measures how often the operator actually trades an alert vs. receives it.
 
-This matters because in Phase 2, the bot will trade every GO signal. If Asher is only trading 50% of them due to personal judgment, Phase 2 will be running signals that Asher would have skipped.
+This matters because in Phase 2, the bot will trade every GO signal. If the operator is only trading 50% of them due to personal judgment, Phase 2 will be running signals that the operator would have skipped.
 
 ### How to Track
 
-For every GO signal in Discord #signals, Asher responds with one of:
+For every GO signal in Discord #signals, the operator responds with one of:
 - ✅ — Executed (logs the fill)
 - ⏭ — Skipped (posts reason in thread)
 - ❌ — Signal was wrong/rejected (posts reason)
 
-The bot (or Asher manually) tracks the ratio:
+The bot (or the operator manually) tracks the ratio:
 
 ```
 Execution Rate = (trades executed) / (GO signals posted)
@@ -157,7 +157,7 @@ Execution Rate = (trades executed) / (GO signals posted)
 ### Target Confirmation Rate
 
 - **Phase 1 Target:** ≥ 80% execution rate over 20+ alert cycles
-- Below 80%: Review why Asher is skipping signals. Are the alerts arriving too late? Is setup quality inconsistent?
+- Below 80%: Review why the operator is skipping signals. Are the alerts arriving too late? Is setup quality inconsistent?
 - Above 80%: System is reliable enough to consider automation
 
 ---
@@ -176,15 +176,15 @@ Phase 1 runs the same schedule as Phase 0:
 
 ### Response Time Requirement
 
-Asher must be able to execute within **5 minutes** of a GO alert posting. The entry window closes at 10:35 AM ET. Alerts arriving after 10:30 AM may not be executable.
+the operator must be able to execute within **5 minutes** of a GO alert posting. The entry window closes at 10:35 AM ET. Alerts arriving after 10:30 AM may not be executable.
 
-If Asher consistently misses the window due to timing, the scheduling parameters in `generate_signal.py` (`ENTRY_WINDOW_START`/`END`) should be adjusted.
+If the operator consistently misses the window due to timing, the scheduling parameters in `generate_signal.py` (`ENTRY_WINDOW_START`/`END`) should be adjusted.
 
 ---
 
 ## NO_TRADE Alerts
 
-Every NO_TRADE is also posted to `#signals` (or `#alerts`) so Asher can review filter failures. This is valuable data — it shows which conditions are blocking trade frequency.
+Every NO_TRADE is also posted to `#signals` (or `#alerts`) so the operator can review filter failures. This is valuable data — it shows which conditions are blocking trade frequency.
 
 A healthy day looks like:
 - 1 GO signal → 1 trade executed
@@ -208,10 +208,10 @@ All Phase 0 exit criteria confirmed and documented. (See `docs/phase-0-paper.md`
 At least 20 GO signals have been posted and responded to (executed or explicitly skipped with reason).
 
 ### Criterion 3: ≥ 80% Execution Confirmation Rate
-Over the 20+ alert cycles, Asher has executed ≥ 80% of signals within the entry window.
+Over the 20+ alert cycles, the operator has executed ≥ 80% of signals within the entry window.
 
 ### Criterion 4: Actual P&L Positive
-Cumulative actual P&L (from Asher's real fills, not theoretical) is positive. Breakeven is acceptable with improving trend.
+Cumulative actual P&L (from the operator's real fills, not theoretical) is positive. Breakeven is acceptable with improving trend.
 
 ### Criterion 5: Slippage Within Tolerance
 Theoretical P&L minus actual P&L (slippage) is < $0.50 per spread on average. If slippage is larger, adjust credit targets or entry timing before proceeding.
@@ -222,8 +222,8 @@ Theoretical P&L minus actual P&L (slippage) is < $0.50 per spread on average. If
 - Redis circuit breakers confirmed functional
 - Drawdown tracking implemented
 
-### Criterion 7: Asher Explicit Approval
-Asher reviews all Phase 1 data and explicitly types in Discord:  
+### Criterion 7: the operator Explicit Approval
+the operator reviews all Phase 1 data and explicitly types in Discord:  
 `"Approved: Sentinel Phase 1 complete. Advance to Phase 2."`
 
 `SENTINEL_PHASE=2` is then set manually in `.env.trading`.
